@@ -28,12 +28,12 @@ router = routes.DefaultRouter()
 router.extend(api)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    re_path(r'^(api(/)?).*', include(router.urls)),
-    re_path(r'(?P<path>)', index, name="index"),  
+    path('admin/', admin.site.urls),    
+    re_path(r'^(api(/)?)', include(router.urls)),
+    re_path(r'^(?!api/)(?P<path>)', index, name='index')
 ]
-
-# path('api/', include(router.urls)),
-# path("api/books/", book, name="book"),
-# re_path(r'^(api(/)?).*', include(router.urls)),
-# re_path(r'^(?P<path>).*', index, name="index"),
+ 
+# ^ beginning of line
+# (?!api) not followed by 'api'
+# .* followed by 0 or more characters
+# re_path(r'^(?!api(/)?)(?P<path>)', index, name='index'), # works
